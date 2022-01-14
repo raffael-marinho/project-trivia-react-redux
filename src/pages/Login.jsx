@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
+import { connect } from 'react-redux';
+import { actionFetchApiToGetPlayerToken } from '../actions';
 
 class Login extends Component {
   constructor() {
@@ -25,8 +29,14 @@ class Login extends Component {
     }
   };
 
+  handleBtnClick = () => {
+    const { history, getPlayerToken } = this.props;
+    history.push('/game');
+    getPlayerToken(this.state);
+  };
+
   render() {
-    const { handleChange } = this;
+    const { handleChange, handleBtnClick } = this;
     const { nome, email, isDisabled } = this.state;
     return (
       <div>
@@ -60,6 +70,7 @@ class Login extends Component {
           data-testid="btn-play"
           type="button"
           disabled={ isDisabled }
+          onClick={ handleBtnClick }
         >
           Play
         </button>
@@ -68,4 +79,16 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  getPlayerToken:
+    (playerNameAndEmail) => dispatch(actionFetchApiToGetPlayerToken(playerNameAndEmail)),
+});
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  getPlayerToken: PropTypes.func.isRequired,
+};
+
+export default withRouter(connect(null, mapDispatchToProps)(Login));

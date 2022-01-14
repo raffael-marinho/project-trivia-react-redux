@@ -1,11 +1,17 @@
 const INITIAL_STATE = {
   nome: '',
   email: '',
+  responseCode: '',
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
   const userObject = {
-    ACTION_TYPE: '',
+    UPDATE_PLAYER_INFOS: () => ({
+      ...state,
+      responseCode: action.responseCode,
+      nome: action.nome,
+      email: action.email,
+    }),
     DEFAULT: () => ({
       ...state,
     }),
