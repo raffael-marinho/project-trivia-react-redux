@@ -9,6 +9,7 @@ const handleToken = (token) => {
 const token = (state = INITIAL_STATE, action) => {
   const tokenObject = {
     GET_TOKEN: () => handleToken(action.token),
+    SAVE_NEW_TOKEN: () => handleToken(action.newToken),
     DEFAULT: () => state,
   };
 
