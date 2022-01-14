@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
+import { connect } from 'react-redux';
+import { actionFetchApiToGetPlayerToken } from '../actions';
 
 class Login extends Component {
   constructor() {
@@ -28,9 +30,9 @@ class Login extends Component {
   };
 
   handleBtnClick = () => {
-    const { history } = this.props;
+    const { history, getPlayerToken } = this.props;
     history.push('/game');
-    
+    getPlayerToken(this.state);
   };
 
   render() {
@@ -77,10 +79,16 @@ class Login extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  getPlayerToken:
+    (playerNameAndEmail) => dispatch(actionFetchApiToGetPlayerToken(playerNameAndEmail)),
+});
+
 Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  getPlayerToken: PropTypes.func.isRequired,
 };
 
-export default withRouter(Login);
+export default withRouter(connect(null, mapDispatchToProps)(Login));
