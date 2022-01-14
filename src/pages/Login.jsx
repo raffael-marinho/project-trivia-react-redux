@@ -33,6 +33,11 @@ class Login extends Component {
     const { history, getPlayerToken } = this.props;
     history.push('/game');
     getPlayerToken(this.state);
+  }
+
+  pageConf = () => {
+    const { history } = this.props;
+    history.push('/configuraçao');
   };
 
   render() {
@@ -40,9 +45,7 @@ class Login extends Component {
     const { nome, email, isDisabled } = this.state;
     return (
       <div>
-        <label
-          htmlFor="input-player-name"
-        >
+        <label htmlFor="input-player-name">
           Nome:
           <input
             data-testid="input-player-name"
@@ -53,9 +56,7 @@ class Login extends Component {
             value={ nome }
           />
         </label>
-        <label
-          htmlFor="input-gravatar-email"
-        >
+        <label htmlFor="input-gravatar-email">
           E-mail:
           <input
             data-testid="input-gravatar-email"
@@ -73,6 +74,10 @@ class Login extends Component {
           onClick={ handleBtnClick }
         >
           Play
+        </button>
+
+        <button type="button" data-testid="btn-settings" onClick={ this.pageConf }>
+          configuraçoes
         </button>
       </div>
     );
