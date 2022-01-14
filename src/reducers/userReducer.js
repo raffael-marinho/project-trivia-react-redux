@@ -1,16 +1,19 @@
 const INITIAL_STATE = {
   nome: '',
   email: '',
-  responseCode: '',
+  questions: [],
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
   const userObject = {
     UPDATE_PLAYER_INFOS: () => ({
       ...state,
-      responseCode: action.responseCode,
       nome: action.nome,
       email: action.email,
+    }),
+    SAVE_QUESTIONS: () => ({
+      ...state,
+      questions: [...action.questions],
     }),
     DEFAULT: () => ({
       ...state,

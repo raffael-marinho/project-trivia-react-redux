@@ -29,10 +29,10 @@ class Login extends Component {
     }
   };
 
-  handleBtnClick = () => {
-    const { history, getPlayerToken } = this.props;
+  handleBtnClick = async () => {
+    const { history, savePlayerInfosAndToken } = this.props;
+    savePlayerInfosAndToken(this.state);
     history.push('/game');
-    getPlayerToken(this.state);
   }
 
   pageConf = () => {
@@ -85,7 +85,7 @@ class Login extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getPlayerToken:
+  savePlayerInfosAndToken:
     (playerNameAndEmail) => dispatch(actionFetchApiToGetPlayerToken(playerNameAndEmail)),
 });
 
@@ -93,7 +93,7 @@ Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
-  getPlayerToken: PropTypes.func.isRequired,
+  savePlayerInfosAndToken: PropTypes.func.isRequired,
 };
 
 export default withRouter(connect(null, mapDispatchToProps)(Login));
