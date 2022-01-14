@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
 
 class Login extends Component {
   constructor() {
@@ -25,14 +27,17 @@ class Login extends Component {
     }
   };
 
+  pageConf = () => {
+    const { history } = this.props;
+    history.push('/configuraçao');
+  };
+
   render() {
     const { handleChange } = this;
     const { nome, email, isDisabled } = this.state;
     return (
       <div>
-        <label
-          htmlFor="input-player-name"
-        >
+        <label htmlFor="input-player-name">
           Nome:
           <input
             data-testid="input-player-name"
@@ -43,9 +48,7 @@ class Login extends Component {
             value={ nome }
           />
         </label>
-        <label
-          htmlFor="input-gravatar-email"
-        >
+        <label htmlFor="input-gravatar-email">
           E-mail:
           <input
             data-testid="input-gravatar-email"
@@ -56,16 +59,23 @@ class Login extends Component {
             value={ email }
           />
         </label>
-        <button
-          data-testid="btn-play"
-          type="button"
-          disabled={ isDisabled }
-        >
+        <button data-testid="btn-play" type="button" disabled={ isDisabled }>
           Play
+        </button>
+
+        <button type="button" data-testid="btn-settings" onClick={ this.pageConf }>
+          configuraçoes
         </button>
       </div>
     );
   }
 }
 
-export default Login;
+export default withRouter(Login);
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  })
+    .isRequired,
+};
