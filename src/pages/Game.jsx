@@ -6,29 +6,22 @@ import md5 from 'crypto-js/md5';
 class Game extends Component {
   render() {
     const { nome, email } = this.props;
-
-    function gravatar() {
-      return `https://www.gravatar.com/avatar/${md5(email).toString()} `;
-    }
-
     return (
       <div>
         <header>
-          <img src={ gravatar } alt="" data-testid="header-profile-picture" />
+          <img src={`https://www.gravatar.com/avatar/${md5(email).toString()}`} alt="" data-testid="header-profile-picture" />
           <h2 data-testid="header-player-name">{nome}</h2>
-          <div data-testid="header-score">placar</div>
+          <div data-testid="header-score">0</div>
         </header>
       </div>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    nome: state.userReducer.nome,
-    email: state.userReducer.email,
-  };
-}
+const mapStateToProps = (state) => ({
+  nome: state.userReducer.nome,
+  email: state.userReducer.email,
+})
 
 Game.propTypes = {
   nome: PropTypes.string.isRequired,
