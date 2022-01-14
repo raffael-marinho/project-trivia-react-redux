@@ -1,6 +1,8 @@
 import { fetchApiToGetToken } from '../services/api';
 
 const UPDATE_PLAYER_INFOS = 'UPDATE_PLAYER_INFOS';
+export const GET_TOKEN = 'GET_TOKEN';
+const SAVE_NEW_TOKEN = 'SAVE_NEW_TOKEN';
 
 const actionUpdatePlayerInfos = ({ nome, email }) => ({
   type: UPDATE_PLAYER_INFOS,
@@ -8,14 +10,10 @@ const actionUpdatePlayerInfos = ({ nome, email }) => ({
   email,
 });
 
-export const GET_TOKEN = 'GET_TOKEN';
-
 const actionGetToken = ({ token }) => ({
   type: GET_TOKEN,
   token,
 });
-
-export default actionGetToken;
 
 export const actionFetchApiToGetPlayerToken = (playerNameAndEmail) => (dispatch) => (
   fetchApiToGetToken()
@@ -25,8 +23,6 @@ export const actionFetchApiToGetPlayerToken = (playerNameAndEmail) => (dispatch)
     })
     .catch((error) => console.log(error))
 );
-
-const SAVE_NEW_TOKEN = 'SAVE_NEW_TOKEN';
 
 export const actionSaveNewToken = (newToken) => ({
   type: SAVE_NEW_TOKEN,
@@ -38,3 +34,5 @@ export const actionSaveQuestions = (questions) => ({
   type: SAVE_QUESTIONS,
   questions,
 });
+
+export default actionGetToken;
