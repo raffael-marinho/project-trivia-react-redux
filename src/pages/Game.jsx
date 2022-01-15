@@ -13,6 +13,15 @@ class Game extends Component {
     };
   }
 
+  handleBGColor = ({ target }) => {
+    const { name } = target;
+    if (name === 'correcrAnswer') {
+      target.style.setProperty('border', '3px solid rgb(6, 240, 15)');
+    } else {
+      target.style.setProperty('border', '3px solid rgb(255, 0, 0)');
+    }
+  }
+
   // Reference: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
   randomizeOptions = (mountedArray) => {
     for (let i = mountedArray.length - 1; i > 0; i -= 1) {
@@ -23,7 +32,7 @@ class Game extends Component {
   }
 
   mountOptionsHtmlElements = (mergedOptions) => {
-    const { randomizeOptions } = this;
+    const { randomizeOptions, handleBGColor } = this;
     const mountedArray = mergedOptions.map((option, index) => {
       if (index === 0) {
         return (
@@ -31,6 +40,8 @@ class Game extends Component {
             data-testid="correct-answer"
             key={ index }
             type="button"
+            onClick={ handleBGColor }
+            name="correcrAnswer"
           >
             {option}
           </button>
@@ -41,6 +52,8 @@ class Game extends Component {
           data-testid={ `wrong-answer-${index - 1}` }
           key={ index }
           type="button"
+          onClick={ handleBGColor }
+          name="wrongAnswer"
         >
           {option}
         </button>
