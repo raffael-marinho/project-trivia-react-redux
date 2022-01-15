@@ -10,12 +10,14 @@ class MountAndRandomizeQuestions extends Component {
     };
   }
 
-  handleBGColor = ({ target }) => {
-    const { name } = target;
-    if (name === 'correcrAnswer') {
-      target.style.setProperty('border', '3px solid rgb(6, 240, 15)');
-    } else {
-      target.style.setProperty('border', '3px solid rgb(255, 0, 0)');
+  handleBGColor = () => {
+    const buttons = document.querySelectorAll('.optionButton');
+    for (let i = 0; i < buttons.length; i += 1) {
+      if (buttons[i].name === 'correctAnswer') {
+        buttons[i].style.setProperty('border', '3px solid rgb(6, 240, 15)');
+      } else {
+        buttons[i].style.setProperty('border', '3px solid rgb(255, 0, 0)');
+      }
     }
   }
 
@@ -38,7 +40,8 @@ class MountAndRandomizeQuestions extends Component {
             key={ index }
             type="button"
             onClick={ handleBGColor }
-            name="correcrAnswer"
+            name="correctAnswer"
+            className="optionButton"
           >
             {option}
           </button>
@@ -51,6 +54,7 @@ class MountAndRandomizeQuestions extends Component {
           type="button"
           onClick={ handleBGColor }
           name="wrongAnswer"
+          className="optionButton"
         >
           {option}
         </button>
@@ -82,7 +86,7 @@ class MountAndRandomizeQuestions extends Component {
     return (
       <div data-testid="answer-options">
         {
-          questionOptions.map((option, index) => <div key={ index }>{option}</div>)
+          questionOptions.map((option) => option)
         }
       </div>
     );

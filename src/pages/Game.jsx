@@ -36,24 +36,24 @@ class Game extends Component {
     return (
       <div>
         <GameHeader />
-        <div>
+        <div data-testid="question-category">
           {
             questions.map(
               (question) => question.category,
             ).find(
               (item, index) => index === 1 && (
-                <h3 data-testid="question-category">{item}</h3>
+                <h3>{item}</h3>
               ),
             )
           }
         </div>
-        <div>
+        <div data-testid="question-text">
           {
             questions.map(
               (element) => element.question,
             ).find(
               (item, index) => index === 1 && (
-                <p data-testid="question-text">{item}</p>
+                <p>{item}</p>
               ),
             )
           }
