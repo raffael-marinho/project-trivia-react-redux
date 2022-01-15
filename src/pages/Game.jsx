@@ -16,19 +16,22 @@ class Game extends Component {
     if (responseCode === INVALID_TOKEN) {
       await getAnotherToken();
       loadQuestions();
+    } else {
+      return 0;
     }
-    loadQuestions();
   }
 
   loadQuestions = async () => {
     const DEFAULT_QTY = 5;
+    const { checkToken } = this;
     const { getQuestions, playerToken } = this.props;
     await getQuestions(DEFAULT_QTY, playerToken);
+    checkToken();
   };
 
   componentDidMount = () => {
-    const { checkToken } = this;
-    checkToken();
+    const { loadQuestions } = this;
+    loadQuestions();
   };
 
   render() {
@@ -41,7 +44,7 @@ class Game extends Component {
             questions.map(
               (question) => question.category,
             ).find(
-              (item, index) => index === 1 && (
+              (item, index) => index === 0 && (
                 <h3>{item}</h3>
               ),
             )
@@ -52,7 +55,7 @@ class Game extends Component {
             questions.map(
               (element) => element.question,
             ).find(
-              (item, index) => index === 1 && (
+              (item, index) => index === 0 && (
                 <p>{item}</p>
               ),
             )

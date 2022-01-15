@@ -2,7 +2,7 @@ const INITIAL_STATE = {
   nome: '',
   email: '',
   questions: [],
-  responseCode: 0,
+  responseCode: 1,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -11,6 +11,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
       ...state,
       nome: action.nome,
       email: action.email,
+      responseCode: action.responseCode,
     }),
     SAVE_QUESTIONS: () => ({
       ...state,

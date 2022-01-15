@@ -3,10 +3,11 @@ import { fetchApiToGetQuestions, fetchApiToGetToken } from '../services/api';
 const UPDATE_PLAYER_INFOS = 'UPDATE_PLAYER_INFOS';
 export const GET_TOKEN = 'GET_TOKEN';
 
-export const actionUpdatePlayerInfos = ({ nome, email }) => ({
+export const actionUpdatePlayerInfos = ({ nome, email }, responseCode) => ({
   type: UPDATE_PLAYER_INFOS,
   nome,
   email,
+  responseCode,
 });
 
 const actionGetToken = ({ token }) => ({
@@ -17,7 +18,7 @@ const actionGetToken = ({ token }) => ({
 export const actionFetchApiToGetPlayerToken = (playerNameAndEmail) => (dispatch) => (
   fetchApiToGetToken()
     .then((response) => {
-      dispatch(actionUpdatePlayerInfos(playerNameAndEmail));
+      dispatch(actionUpdatePlayerInfos(playerNameAndEmail, response.response_code));
       dispatch(actionGetToken(response));
     })
     .catch((error) => console.log(error))
@@ -27,6 +28,7 @@ export const actionFetchApiToGetAnotherToken = () => (dispatch) => (
   fetchApiToGetToken()
     .then((response) => {
       dispatch(actionGetToken(response));
+      dispatch(actionUpdatePlayerInfos(null, response.response_code));
     })
     .catch((error) => console.log(error))
 );

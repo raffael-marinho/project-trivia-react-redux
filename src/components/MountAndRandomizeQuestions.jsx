@@ -73,7 +73,7 @@ class MountAndRandomizeQuestions extends Component {
   handleOptions = () => {
     const { questions } = this.props;
     const { mountOptions } = this;
-    questions.map((question, index) => index === 1 && mountOptions(question));
+    questions.map((question, index) => index === 0 && mountOptions(question));
   }
 
   componentDidMount = () => {
