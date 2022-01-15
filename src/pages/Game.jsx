@@ -1,48 +1,38 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { actionSaveNewToken, actionSaveQuestions } from '../actions';
-import { fetchApiToGetToken, fetchApiToGetQuestions } from '../services/api';
+import {
+  actionFetchApiToGetAnotherToken,
+  actionFetchApiToGetQuizQuestions,
+  actionSaveQuestions,
+} from '../actions';
 import GameHeader from '../components/GameHeader';
 import MountAndRandomizeQuestions from '../components/MountAndRandomizeQuestions';
 
 class Game extends Component {
-  constructor() {
-    super();
-    this.state = {
-      isLoaded: false,
-    };
-  }
-
-  checkToken = async (data) => {
-    const { props: { saveNewToken, saveQuestions, playerToken } } = this;
+  checkToken = async () => {
+    const { loadQuestions, props: { responseCode, getAnotherToken } } = this;
     const INVALID_TOKEN = 3;
-    if (data.response_code === INVALID_TOKEN) {
-      const result = await fetchApiToGetToken();
-      saveNewToken(result);
-      const newData = await fetchApiToGetQuestions(playerToken);
-      saveQuestions(newData.results);
+    if (responseCode === INVALID_TOKEN) {
+      await getAnotherToken();
+      loadQuestions();
     }
-    saveQuestions(data.results);
-    this.setState({ isLoaded: true });
+    loadQuestions();
   }
 
   loadQuestions = async () => {
     const DEFAULT_QTY = 5;
-    const { checkToken } = this;
-    const { playerToken } = this.props;
-    const data = await fetchApiToGetQuestions(DEFAULT_QTY, playerToken);
-    checkToken(data);
+    const { getQuestions, playerToken } = this.props;
+    await getQuestions(DEFAULT_QTY, playerToken);
   };
 
   componentDidMount = () => {
-    const { loadQuestions } = this;
-    loadQuestions();
+    const { checkToken } = this;
+    checkToken();
   };
 
   render() {
     const { questions } = this.props;
-    const { isLoaded } = this.state;
     return (
       <div>
         <GameHeader />
@@ -70,7 +60,7 @@ class Game extends Component {
         </div>
         <div data-testid="answer-options">
           {
-            isLoaded && <MountAndRandomizeQuestions />
+            questions.length > 0 && <MountAndRandomizeQuestions />
           }
         </div>
       </div>
@@ -81,18 +71,24 @@ class Game extends Component {
 const mapStateToProps = (state) => ({
   playerToken: state.token,
   questions: state.userReducer.questions,
+  responseCode: state.userReducer.responseCode,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveNewToken: (newToken) => dispatch(actionSaveNewToken(newToken)),
   saveQuestions: (questions) => dispatch(actionSaveQuestions(questions)),
+  getQuestions:
+    (quantity, playerToken) => dispatch(
+      actionFetchApiToGetQuizQuestions(quantity, playerToken),
+    ),
+  getAnotherToken: () => dispatch(actionFetchApiToGetAnotherToken()),
 });
 
 Game.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   playerToken: PropTypes.string.isRequired,
-  saveNewToken: PropTypes.func.isRequired,
-  saveQuestions: PropTypes.func.isRequired,
+  responseCode: PropTypes.number.isRequired,
+  getAnotherToken: PropTypes.func.isRequired,
+  getQuestions: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

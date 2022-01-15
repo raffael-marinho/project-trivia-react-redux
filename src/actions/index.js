@@ -1,8 +1,7 @@
-import { fetchApiToGetToken } from '../services/api';
+import { fetchApiToGetQuestions, fetchApiToGetToken } from '../services/api';
 
 const UPDATE_PLAYER_INFOS = 'UPDATE_PLAYER_INFOS';
 export const GET_TOKEN = 'GET_TOKEN';
-const SAVE_NEW_TOKEN = 'SAVE_NEW_TOKEN';
 
 export const actionUpdatePlayerInfos = ({ nome, email }) => ({
   type: UPDATE_PLAYER_INFOS,
@@ -24,15 +23,27 @@ export const actionFetchApiToGetPlayerToken = (playerNameAndEmail) => (dispatch)
     .catch((error) => console.log(error))
 );
 
-export const actionSaveNewToken = (newToken) => ({
-  type: SAVE_NEW_TOKEN,
-  newToken,
-});
+export const actionFetchApiToGetAnotherToken = () => (dispatch) => (
+  fetchApiToGetToken()
+    .then((response) => {
+      dispatch(actionGetToken(response));
+    })
+    .catch((error) => console.log(error))
+);
 
 const SAVE_QUESTIONS = 'SAVE_QUESTIONS';
-export const actionSaveQuestions = (questions) => ({
+export const actionSaveQuestions = (data) => ({
   type: SAVE_QUESTIONS,
-  questions,
+  questions: data.results,
+  responseCode: data.response_code,
 });
+
+export const actionFetchApiToGetQuizQuestions = (quantity, playerToken) => (dispatch) => {
+  fetchApiToGetQuestions(quantity, playerToken)
+    .then((response) => {
+      dispatch(actionSaveQuestions(response));
+    })
+    .catch((error) => console.log(error));
+};
 
 export default actionGetToken;

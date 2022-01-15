@@ -31,7 +31,7 @@ class Login extends Component {
 
   handleBtnClick = async () => {
     const { history, savePlayerInfosAndToken } = this.props;
-    savePlayerInfosAndToken(this.state);
+    await savePlayerInfosAndToken(this.state);
     history.push('/game');
   }
 

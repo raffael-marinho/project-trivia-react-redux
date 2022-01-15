@@ -2,6 +2,7 @@ const INITIAL_STATE = {
   nome: '',
   email: '',
   questions: [],
+  responseCode: 0,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -14,6 +15,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
     SAVE_QUESTIONS: () => ({
       ...state,
       questions: [...action.questions],
+      responseCode: action.responseCode,
     }),
     DEFAULT: () => ({
       ...state,
