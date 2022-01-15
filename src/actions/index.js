@@ -4,7 +4,7 @@ const UPDATE_PLAYER_INFOS = 'UPDATE_PLAYER_INFOS';
 export const GET_TOKEN = 'GET_TOKEN';
 const SAVE_NEW_TOKEN = 'SAVE_NEW_TOKEN';
 
-const actionUpdatePlayerInfos = ({ nome, email }) => ({
+export const actionUpdatePlayerInfos = ({ nome, email }) => ({
   type: UPDATE_PLAYER_INFOS,
   nome,
   email,

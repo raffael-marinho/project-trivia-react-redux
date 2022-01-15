@@ -6,10 +6,13 @@ export const fetchApiToGetToken = async () => {
   return JSON;
 };
 
-const QUESTIONS_URL = 'https://opentdb.com/api.php?amount=5&token=';
+const QUESTIONS_URL_FIRST = 'https://opentdb.com/api.php?amount=';
+const QUESTIONS_URL_LAST = '&token=';
 
-export const fetchApiToGetQuestions = async (token) => {
-  const response = await fetch(`${QUESTIONS_URL}${token}`);
+export const fetchApiToGetQuestions = async (qty, token) => {
+  const response = await fetch(
+    `${QUESTIONS_URL_FIRST}${qty}${QUESTIONS_URL_LAST}${token}`,
+  );
   const JSON = await response.json();
   return JSON;
 };
