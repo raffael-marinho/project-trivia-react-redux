@@ -1,7 +1,9 @@
 const INITIAL_STATE = {
   nome: '',
-  email: '',
+  gravatarEmail: '',
   questions: [],
+  assertions: 0,
+  score: 0,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -9,7 +11,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
     UPDATE_PLAYER_INFOS: () => ({
       ...state,
       nome: action.nome,
-      email: action.email,
+      gravatarEmail: action.email,
     }),
     SAVE_QUESTIONS: () => ({
       ...state,

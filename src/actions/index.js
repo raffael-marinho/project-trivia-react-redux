@@ -31,13 +31,13 @@ export const actionFetchApiToGetPlayerToken = (playerNameAndEmail) => (dispatch)
     .catch((error) => console.log(error))
 );
 
-export const actionFetchApiToGetAnotherToken = () => (dispatch) => (
-  fetchApiToGetToken()
-    .then((response) => {
-      dispatch(actionGetToken(response));
-    })
-    .catch((error) => console.log(error))
-);
+// export const actionFetchApiToGetAnotherToken = () => (dispatch) => (
+//   fetchApiToGetToken()
+//     .then((response) => {
+//       dispatch(actionGetToken(response));
+//     })
+//     .catch((error) => console.log(error))
+// );
 
 export const actionFetchApiToGetQuizQuestions = (
   quantity, playerToken,
