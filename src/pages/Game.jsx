@@ -7,6 +7,8 @@ import {
 } from '../actions';
 import GameHeader from '../components/GameHeader';
 import MountAndRandomizeQuestions from '../components/MountAndRandomizeQuestions';
+import QuestionCategory from '../components/QuestionCategory';
+import QuestionText from '../components/QuestionText';
 
 class Game extends Component {
   loadQuestions = async () => {
@@ -25,28 +27,8 @@ class Game extends Component {
     return (
       <div>
         <GameHeader />
-        <div data-testid="question-category">
-          {
-            questions.map(
-              (question) => question.category,
-            ).find(
-              (item, index) => index === 0 && (
-                <h3>{item}</h3>
-              ),
-            )
-          }
-        </div>
-        <div data-testid="question-text">
-          {
-            questions.map(
-              (element) => element.question,
-            ).find(
-              (item, index) => index === 0 && (
-                <p>{item}</p>
-              ),
-            )
-          }
-        </div>
+        <QuestionCategory />
+        <QuestionText />
         <div data-testid="answer-options">
           {
             questions.length > 0 && <MountAndRandomizeQuestions />
@@ -69,7 +51,6 @@ const mapDispatchToProps = (dispatch) => ({
     (quantity, playerToken) => dispatch(
       actionFetchApiToGetQuizQuestions(quantity, playerToken),
     ),
-  // getAnotherToken: () => dispatch(actionFetchApiToGetAnotherToken()),
 });
 
 Game.propTypes = {

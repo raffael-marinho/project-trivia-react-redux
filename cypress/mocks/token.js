@@ -5,7 +5,6 @@ const tokenResponse = {
 };
 
 const expiredTokenResponse = {
-  // substituído valor original, 0, por valor 3, na linha 9;
   "response_code":0,
   "response_message":"Token Generated Successfully!",
   "token":"b0d533aef5922425fb5962cbd3f1c79bd7da7599f949d672d3fbdca1f3bbe741"
