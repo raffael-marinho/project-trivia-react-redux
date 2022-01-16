@@ -94,7 +94,7 @@ class MountAndRandomizeQuestions extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  questions: state.userReducer.questions,
+  questions: state.player.questions,
 });
 
 MountAndRandomizeQuestions.propTypes = {

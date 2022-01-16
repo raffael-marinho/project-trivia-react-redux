@@ -43,8 +43,7 @@ class Game extends Component {
 
 const mapStateToProps = (state) => ({
   playerToken: state.token,
-  questions: state.userReducer.questions,
-  responseCode: state.userReducer.responseCode,
+  questions: state.player.questions,
 });
 
 const mapDispatchToProps = (dispatch) => ({

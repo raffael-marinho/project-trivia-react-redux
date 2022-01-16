@@ -22,7 +22,7 @@ class QuestionCategory extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  questions: state.userReducer.questions,
+  questions: state.player.questions,
 });
 
 QuestionCategory.propTypes = {

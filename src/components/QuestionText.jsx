@@ -22,7 +22,7 @@ class QuestionText extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  questions: state.userReducer.questions,
+  questions: state.player.questions,
 });
 
 QuestionText.propTypes = {

@@ -1,16 +1,16 @@
 const INITIAL_STATE = {
-  nome: '',
+  name: '',
   gravatarEmail: '',
   questions: [],
   assertions: 0,
   score: 0,
 };
 
-const userReducer = (state = INITIAL_STATE, action) => {
+const player = (state = INITIAL_STATE, action) => {
   const userObject = {
     UPDATE_PLAYER_INFOS: () => ({
       ...state,
-      nome: action.nome,
+      name: action.nome,
       gravatarEmail: action.email,
     }),
     SAVE_QUESTIONS: () => ({
@@ -24,4 +24,4 @@ const userReducer = (state = INITIAL_STATE, action) => {
   return (userObject[action.type] || userObject.DEFAULT)();
 };
 
-export default userReducer;
+export default player;
