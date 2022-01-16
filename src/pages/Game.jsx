@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import {
-  actionFetchApiToGetAnotherToken,
   actionFetchApiToGetQuizQuestions,
   actionSaveQuestions,
 } from '../actions';
@@ -10,23 +9,10 @@ import GameHeader from '../components/GameHeader';
 import MountAndRandomizeQuestions from '../components/MountAndRandomizeQuestions';
 
 class Game extends Component {
-  checkToken = async () => {
-    const { loadQuestions, props: { responseCode, getAnotherToken } } = this;
-    const INVALID_TOKEN = 3;
-    if (responseCode === INVALID_TOKEN) {
-      await getAnotherToken();
-      loadQuestions();
-    } else {
-      return 0;
-    }
-  }
-
   loadQuestions = async () => {
     const DEFAULT_QTY = 5;
-    const { checkToken } = this;
     const { getQuestions, playerToken } = this.props;
     await getQuestions(DEFAULT_QTY, playerToken);
-    checkToken();
   };
 
   componentDidMount = () => {
@@ -83,14 +69,12 @@ const mapDispatchToProps = (dispatch) => ({
     (quantity, playerToken) => dispatch(
       actionFetchApiToGetQuizQuestions(quantity, playerToken),
     ),
-  getAnotherToken: () => dispatch(actionFetchApiToGetAnotherToken()),
+  // getAnotherToken: () => dispatch(actionFetchApiToGetAnotherToken()),
 });
 
 Game.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   playerToken: PropTypes.string.isRequired,
-  responseCode: PropTypes.number.isRequired,
-  getAnotherToken: PropTypes.func.isRequired,
   getQuestions: PropTypes.func.isRequired,
 };
 
