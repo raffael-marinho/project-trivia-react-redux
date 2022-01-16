@@ -5,13 +5,18 @@ import { PropTypes } from 'prop-types';
 
 class GameHeader extends Component {
   render() {
-    const { nome, email } = this.props;
+    const { nome, email, score } = this.props;
     return (
       <div>
         <header>
-          <img src={ `https://www.gravatar.com/avatar/${md5(email).toString()}` } alt="" data-testid="header-profile-picture" />
+          <img
+            src={ `https://www.gravatar.com/avatar/${md5(email).toString()}` }
+            alt=""
+            data-testid="header-profile-picture"
+            id="header-profile-picture"
+          />
           <h2 data-testid="header-player-name">{nome}</h2>
-          <div data-testid="header-score">0</div>
+          <div data-testid="header-score">{ score }</div>
         </header>
       </div>
     );
@@ -21,11 +26,13 @@ class GameHeader extends Component {
 const mapStateToProps = (state) => ({
   nome: state.player.name,
   email: state.player.gravatarEmail,
+  score: state.player.score,
 });
 
 GameHeader.propTypes = {
   nome: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps, null)(GameHeader);

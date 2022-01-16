@@ -17,6 +17,10 @@ const player = (state = INITIAL_STATE, action) => {
       ...state,
       questions: [...action.questions],
     }),
+    UPDATE_SCORE: () => ({
+      ...state,
+      score: action.score,
+    }),
     DEFAULT: () => ({
       ...state,
     }),
