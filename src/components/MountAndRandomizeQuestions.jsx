@@ -10,7 +10,7 @@ class MountAndRandomizeQuestions extends Component {
     };
   }
 
-  handleBGColor = () => {
+  handleOptionButton = () => {
     const buttons = document.querySelectorAll('.optionButton');
     for (let i = 0; i < buttons.length; i += 1) {
       if (buttons[i].name === 'correctAnswer') {
@@ -31,7 +31,7 @@ class MountAndRandomizeQuestions extends Component {
   }
 
   mountOptionsHtmlElements = (mergedOptions) => {
-    const { randomizeOptions, handleBGColor } = this;
+    const { randomizeOptions, handleOptionButton } = this;
     const mountedArray = mergedOptions.map((option, index) => {
       if (index === 0) {
         return (
@@ -39,7 +39,7 @@ class MountAndRandomizeQuestions extends Component {
             data-testid="correct-answer"
             key={ index }
             type="button"
-            onClick={ handleBGColor }
+            onClick={ handleOptionButton }
             name="correctAnswer"
             className="optionButton"
           >
@@ -52,7 +52,7 @@ class MountAndRandomizeQuestions extends Component {
           data-testid={ `wrong-answer-${index - 1}` }
           key={ index }
           type="button"
-          onClick={ handleBGColor }
+          onClick={ handleOptionButton }
           name="wrongAnswer"
           className="optionButton"
         >
