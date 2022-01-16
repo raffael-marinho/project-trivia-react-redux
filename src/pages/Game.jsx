@@ -9,6 +9,7 @@ import GameHeader from '../components/GameHeader';
 import MountAndRandomizeQuestions from '../components/MountAndRandomizeQuestions';
 import QuestionCategory from '../components/QuestionCategory';
 import QuestionText from '../components/QuestionText';
+import Timer from '../components/Timer';
 
 class Game extends Component {
   loadQuestions = async () => {
@@ -27,6 +28,7 @@ class Game extends Component {
     return (
       <div>
         <GameHeader />
+        <Timer />
         <QuestionCategory />
         <QuestionText />
         <div data-testid="answer-options">

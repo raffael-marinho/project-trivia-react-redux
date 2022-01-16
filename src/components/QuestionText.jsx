@@ -6,7 +6,7 @@ class QuestionText extends Component {
   render() {
     const { questions } = this.props;
     return (
-      <div data-testid="question-category">
+      <div data-testid="question-text">
         {
           questions.map(
             (question) => question.question,
