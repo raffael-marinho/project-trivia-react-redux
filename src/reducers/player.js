@@ -9,7 +9,7 @@ const INITIAL_STATE = {
 
 const handleQuestionIndex = (actualIndex, actualLength) => {
   let newIndex = actualIndex + 1;
-  if (newIndex > actualLength - 1) newIndex = actualLength - 1;
+  if (newIndex > actualLength) newIndex = actualLength;
   return newIndex;
 };
 
