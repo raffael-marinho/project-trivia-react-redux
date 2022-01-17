@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FeedbackHeader from './FeedbackHeader';
 import FeedbackMessage from '../components/FeedbackMessage';
+import Score from './Score';
 
 class Feedback extends Component {
   render() {
@@ -8,6 +9,7 @@ class Feedback extends Component {
       <div>
         <FeedbackHeader />
         <FeedbackMessage />
+        <Score />
       </div>
     );
   }
