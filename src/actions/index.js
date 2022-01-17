@@ -58,4 +58,10 @@ export const actionIncreaseQuestionIndex = () => ({
   type: INCREASE_QUESTION_INDEX,
 });
 
+const UPDATE_ASSERTIONS = 'UPDATE_ASSERTIONS';
+export const actionUpdateAssertions = (answerCondition) => ({
+  type: UPDATE_ASSERTIONS,
+  answerCondition,
+});
+
 export default actionGetToken;
