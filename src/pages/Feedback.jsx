@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import FeedbackHeader from './FeedbackHeader';
 
 class Feedback extends Component {
   render() {
     return (
       <div>
-        <p data-testid="feedback-text">Well done</p>
+        <FeedbackHeader />
       </div>
     );
   }
