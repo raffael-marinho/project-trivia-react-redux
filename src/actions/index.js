@@ -1,18 +1,25 @@
-import { fetchApiToGetToken } from '../services/api';
+import { fetchApiToGetQuestions, fetchApiToGetToken } from '../services/api';
 
 const UPDATE_PLAYER_INFOS = 'UPDATE_PLAYER_INFOS';
-export const GET_TOKEN = 'GET_TOKEN';
-const SAVE_NEW_TOKEN = 'SAVE_NEW_TOKEN';
 
-const actionUpdatePlayerInfos = ({ nome, email }) => ({
+export const actionUpdatePlayerInfos = ({ nome, email }) => ({
   type: UPDATE_PLAYER_INFOS,
   nome,
   email,
 });
 
+export const GET_TOKEN = 'GET_TOKEN';
+
 const actionGetToken = ({ token }) => ({
   type: GET_TOKEN,
   token,
+});
+
+const SAVE_QUESTIONS = 'SAVE_QUESTIONS';
+
+export const actionSaveQuestions = (data) => ({
+  type: SAVE_QUESTIONS,
+  questions: data.results,
 });
 
 export const actionFetchApiToGetPlayerToken = (playerNameAndEmail) => (dispatch) => (
@@ -24,15 +31,31 @@ export const actionFetchApiToGetPlayerToken = (playerNameAndEmail) => (dispatch)
     .catch((error) => console.log(error))
 );
 
-export const actionSaveNewToken = (newToken) => ({
-  type: SAVE_NEW_TOKEN,
-  newToken,
+export const actionFetchApiToGetQuizQuestions = (
+  quantity, playerToken,
+) => async (dispatch) => {
+  const INVALID_TOKEN = 3;
+  const DEFAULT_QTY = 5;
+  const results = await fetchApiToGetQuestions(quantity, playerToken);
+  if (results.response_code === INVALID_TOKEN) {
+    const newToken = await fetchApiToGetToken();
+    const newQuestions = await fetchApiToGetQuestions(DEFAULT_QTY, newToken.token);
+    dispatch(actionGetToken(newToken));
+    dispatch(actionSaveQuestions(newQuestions));
+  } else {
+    dispatch(actionSaveQuestions(results));
+  }
+};
+
+const UPDATE_SCORE = 'UPDATE_SCORE';
+export const actionUpdateScore = (score) => ({
+  type: UPDATE_SCORE,
+  score,
 });
 
-const SAVE_QUESTIONS = 'SAVE_QUESTIONS';
-export const actionSaveQuestions = (questions) => ({
-  type: SAVE_QUESTIONS,
-  questions,
+const INCREASE_QUESTION_INDEX = 'INCREASE_QUESTION_INDEX';
+export const actionIncreaseQuestionIndex = () => ({
+  type: INCREASE_QUESTION_INDEX,
 });
 
 export default actionGetToken;
