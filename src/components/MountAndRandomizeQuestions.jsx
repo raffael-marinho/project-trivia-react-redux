@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { actionUpdateScore } from '../actions';
+import NextQuestionButton from './NextQuestionButton';
 
 class MountAndRandomizeQuestions extends Component {
   constructor() {
     super();
     this.state = {
       questionOptions: [],
+      answered: false,
     };
   }
 
@@ -18,14 +20,15 @@ class MountAndRandomizeQuestions extends Component {
       medium: 2,
       hard: 3,
     };
-    const { questions, name, updateScore } = this.props;
+    const { questions, name, updateScore, questionIndex } = this.props;
     const remainingTime = document.querySelector('.timer').innerText;
     const profilePicture = document.querySelector('#header-profile-picture').src;
     const previousScore = JSON.parse(localStorage.getItem('ranking')).score;
 
     if (target.name === 'correctAnswer') {
       const currentScore = SCORE_CONSTANT
-        + (Number(remainingTime) * Number(difficultyObject[questions[0].difficulty]));
+        + (Number(remainingTime)
+        * Number(difficultyObject[questions[questionIndex].difficulty]));
       const finalScore = previousScore + currentScore;
       const mountedScore = {
         name,
@@ -34,6 +37,7 @@ class MountAndRandomizeQuestions extends Component {
       };
       localStorage.setItem('ranking', JSON.stringify(mountedScore));
       updateScore(finalScore);
+      this.setState({ answered: true });
     } else {
       const mountedScore = {
         name,
@@ -42,6 +46,7 @@ class MountAndRandomizeQuestions extends Component {
       };
       localStorage.setItem('ranking', JSON.stringify(mountedScore));
       updateScore(previousScore);
+      this.setState({ answered: true });
     }
   };
 
@@ -58,14 +63,15 @@ class MountAndRandomizeQuestions extends Component {
     calculateScore(target);
   }
 
-  // Reference: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
   randomizeOptions = (mountedArray) => {
     for (let i = mountedArray.length - 1; i > 0; i -= 1) {
       const j = Math.floor(Math.random() * (i + 1));
       [mountedArray[i], mountedArray[j]] = [mountedArray[j], mountedArray[i]];
     }
-    this.setState({ questionOptions: [...mountedArray] });
-  }
+    this.setState(
+      (prevState) => ({ questionOptions: [...prevState.questionOptions, mountedArray] }),
+    );
+  };
 
   mountOptionsHtmlElements = (mergedOptions) => {
     const { randomizeOptions, handleOptionButton } = this;
@@ -110,8 +116,8 @@ class MountAndRandomizeQuestions extends Component {
   handleOptions = () => {
     const { questions } = this.props;
     const { mountOptions } = this;
-    questions.map((question, index) => index === 0 && mountOptions(question));
-  }
+    questions.map((question) => mountOptions(question));
+  };
 
   setInitialScore = () => {
     const { handleOptions } = this;
@@ -129,11 +135,15 @@ class MountAndRandomizeQuestions extends Component {
   }
 
   render() {
-    const { questionOptions } = this.state;
+    const { questionIndex } = this.props;
+    const { questionOptions, answered } = this.state;
     return (
       <div data-testid="answer-options">
         {
-          questionOptions.map((option) => option)
+          questionOptions.map((option, index) => index === questionIndex && option)
+        }
+        {
+          answered && <NextQuestionButton />
         }
       </div>
     );
@@ -142,6 +152,7 @@ class MountAndRandomizeQuestions extends Component {
 
 const mapStateToProps = (state) => ({
   questions: state.player.questions,
+  questionIndex: state.player.questionIndex,
   name: state.player.name,
 });
 
@@ -153,6 +164,7 @@ MountAndRandomizeQuestions.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   name: PropTypes.string.isRequired,
   updateScore: PropTypes.func.isRequired,
+  questionIndex: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MountAndRandomizeQuestions);

@@ -6,11 +6,12 @@ import { PropTypes } from 'prop-types';
 class GameHeader extends Component {
   render() {
     const { nome, email, score } = this.props;
+    const myGravatarEmail = `https://www.gravatar.com/avatar/${md5(email).toString()}`;
     return (
       <div>
         <header>
           <img
-            src={ `https://www.gravatar.com/avatar/${md5(email).toString()}` }
+            src={ myGravatarEmail }
             alt=""
             data-testid="header-profile-picture"
             id="header-profile-picture"

@@ -53,4 +53,9 @@ export const actionUpdateScore = (score) => ({
   score,
 });
 
+const INCREASE_QUESTION_INDEX = 'INCREASE_QUESTION_INDEX';
+export const actionIncreaseQuestionIndex = () => ({
+  type: INCREASE_QUESTION_INDEX,
+});
+
 export default actionGetToken;
