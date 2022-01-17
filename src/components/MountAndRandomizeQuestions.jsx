@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { actionUpdateScore } from '../actions';
+import { actionUpdateScore, actionUpdateAssertions } from '../actions';
 import NextQuestionButton from './NextQuestionButton';
 
 class MountAndRandomizeQuestions extends Component {
@@ -20,7 +20,7 @@ class MountAndRandomizeQuestions extends Component {
       medium: 2,
       hard: 3,
     };
-    const { questions, name, updateScore, questionIndex } = this.props;
+    const { questions, name, updateScore, questionIndex, updateAssertions } = this.props;
     const remainingTime = document.querySelector('.timer').innerText;
     const profilePicture = document.querySelector('#header-profile-picture').src;
     const previousScore = JSON.parse(localStorage.getItem('ranking')).score;
@@ -38,6 +38,7 @@ class MountAndRandomizeQuestions extends Component {
       localStorage.setItem('ranking', JSON.stringify(mountedScore));
       updateScore(finalScore);
       this.setState({ answered: true });
+      updateAssertions('correct');
     } else {
       const mountedScore = {
         name,
@@ -47,6 +48,7 @@ class MountAndRandomizeQuestions extends Component {
       localStorage.setItem('ranking', JSON.stringify(mountedScore));
       updateScore(previousScore);
       this.setState({ answered: true });
+      updateAssertions('wrong');
     }
   };
 
@@ -63,6 +65,7 @@ class MountAndRandomizeQuestions extends Component {
     calculateScore(target);
   }
 
+  // Reference:https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
   randomizeOptions = (mountedArray) => {
     for (let i = mountedArray.length - 1; i > 0; i -= 1) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -158,6 +161,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   updateScore: (score) => dispatch(actionUpdateScore(score)),
+  updateAssertions:
+    (answerCondition) => dispatch(actionUpdateAssertions(answerCondition)),
 });
 
 MountAndRandomizeQuestions.propTypes = {
@@ -165,6 +170,7 @@ MountAndRandomizeQuestions.propTypes = {
   name: PropTypes.string.isRequired,
   updateScore: PropTypes.func.isRequired,
   questionIndex: PropTypes.number.isRequired,
+  updateAssertions: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MountAndRandomizeQuestions);

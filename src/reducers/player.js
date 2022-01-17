@@ -13,6 +13,16 @@ const handleQuestionIndex = (actualIndex, actualLength) => {
   return newIndex;
 };
 
+const handleAssertions = (answer, actualAssertions) => {
+  if (answer === 'correct') {
+    const currentAssertions = actualAssertions;
+    const newAssertions = currentAssertions + 1;
+    return newAssertions;
+  }
+  const currentAssertions = actualAssertions;
+  return currentAssertions;
+};
+
 const player = (state = INITIAL_STATE, action) => {
   const userObject = {
     UPDATE_PLAYER_INFOS: () => ({
@@ -31,6 +41,10 @@ const player = (state = INITIAL_STATE, action) => {
     INCREASE_QUESTION_INDEX: () => ({
       ...state,
       questionIndex: handleQuestionIndex(state.questionIndex, state.questions.length),
+    }),
+    UPDATE_ASSERTIONS: () => ({
+      ...state,
+      assertions: handleAssertions(action.answerCondition, state.assertions),
     }),
     DEFAULT: () => ({
       ...state,
