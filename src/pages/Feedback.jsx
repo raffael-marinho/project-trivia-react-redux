@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import FeedbackHeader from './FeedbackHeader';
+import FeedbackHeader from '../components/FeedbackHeader';
 import FeedbackMessage from '../components/FeedbackMessage';
 import Score from './Score';
 import PlayAgain from '../components/PlayAgain';
-import ButtonRanking from '../components/ButtonRanking';
+import BtnRanking from '../components/BtnRanking';
 
 class Feedback extends Component {
   render() {
@@ -13,7 +13,7 @@ class Feedback extends Component {
         <FeedbackMessage />
         <Score />
         <PlayAgain />
-        <ButtonRanking />
+        <BtnRanking />
       </div>
     );
   }

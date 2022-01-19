@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import BtnHome from '../components/BtnHome';
 
 class Ranking extends Component {
   render() {
@@ -9,6 +10,7 @@ class Ranking extends Component {
         >
           Ranking
         </h1>
+        <BtnHome />
       </div>
     );
   }
