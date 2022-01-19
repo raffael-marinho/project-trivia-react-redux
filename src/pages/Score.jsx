@@ -29,7 +29,6 @@ class Score extends Component {
 
     return (
       <div>
-        <p data-testid="feedback-text">Well done</p>
         <div data-testid="feedback-total-score">{pontos}</div>
         <div data-testid="feedback-total-question">{assertions}</div>
       </div>

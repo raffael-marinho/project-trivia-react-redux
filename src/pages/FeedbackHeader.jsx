@@ -49,7 +49,6 @@ class FeedbackHeader extends Component {
           </h2>
           <h3 data-testid="header-score">{pontos}</h3>
         </header>
-        <p data-testid="feedback-text">Well done</p>
       </div>
     );
   }
